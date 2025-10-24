@@ -25,47 +25,139 @@ public class SinglyLinkedList<E> implements LinkedList<E> {
         } else {
             head = node;
         }
+        size++;
 
     }
 
     @Override
     public void addLast(E element) {
 
+        Node node = new Node(element, null); // 1
+
+        if (tail == null) {
+            tail = node;
+            head = node;
+        } else {
+            tail.next = node; // 2
+            tail = node; // 3
+        }
+        size++;
+
+
     }
 
     @Override
     public E pollFirst() {
-        return null;
+
+        E element;
+        if (head == null) {
+            element = null;
+        } else {
+            element = head.element;
+
+            if (head == tail) { // only one element - 4
+                head = null;
+                tail = null;
+            } else {
+                Node next = head.next; // 2
+                head.next = null; // 3
+                head = next; // 4
+            }
+            size--;
+        }
+
+        return element;
     }
 
     @Override
     public E pollLast() {
-        return null;
+
+        E element;
+        if (tail == null) {
+            element = null;
+        } else {
+            element = tail.element; // 1
+
+            if (head == tail) { // 3
+                head = null;
+                tail = null;
+            } else {
+                Node current = head;
+                Node previous = head;
+                while(current.next != null) {
+                    previous = current; // 2
+                    current = current.next; // 2
+                }
+                tail = previous; // 3
+                tail.next = null; // 4
+            }
+            size--;
+        }
+
+
+        return element;
     }
 
     @Override
     public E peekFirst() {
-        return null;
+
+        E element;
+        if (head == null) {
+            element = null;
+        } else {
+            element =  head.element;
+        }
+
+        return element;
     }
 
     @Override
     public E peekLast() {
-        return null;
+
+        E element;
+        if (tail == null) {
+            element = null;
+        } else {
+            element = tail.element;
+        }
+        return element;
     }
 
     @Override
     public void clear() {
 
+        Node current = head;
+        while (current != null) {
+            Node next = current.next;
+            current.element = null;
+            current.next = null; // breaks links
+            current = next;
+        }
+
+        head = null;
+        tail = null;
+        size = 0;
     }
 
     @Override
     public boolean contains(E element) {
-        return false;
+
+        boolean contains = false;
+
+        Node current = head;
+        while(current != null) {
+            if (current.element == element) {
+                contains = true;
+                break;
+            }
+            current = current.next;
+        }
+        return contains;
     }
 
     @Override
     public int size() {
-        return 0;
+        return this.size;
     }
 
     @Override
