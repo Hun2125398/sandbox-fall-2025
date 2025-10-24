@@ -158,7 +158,7 @@ public class SinglyLinkedList<E> implements LinkedList<E> {
     @Override
     public int size() {
         return this.size;
-    }
+    }//
 
     @Override
     public String toString() {
